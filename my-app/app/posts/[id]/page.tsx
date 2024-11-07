@@ -1,3 +1,5 @@
+"use client";
+
 import { AxiosError } from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPostById } from "@/api/posts";
@@ -5,6 +7,7 @@ import { fetchSingleUserById } from "@/api/users.api";
 import { PostCard } from "@/components/postCard";
 
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export const PostById: React.FC = () => {
   const router = useRouter()
@@ -29,7 +32,7 @@ export const PostById: React.FC = () => {
     (post.error as AxiosError)?.status === 404 ||
     (user.error as AxiosError)?.status === 404
   ) {
-    return <Navigate to="/" />;
+    return <Link href="/"/>;
   }
 
   if (!user.isSuccess || !post.isSuccess) {
@@ -45,16 +48,16 @@ export const PostById: React.FC = () => {
       <PostCard extendBody={true} user={user.data} post={post.data} />
       {!router.pathname.includes("comments") && (
         <div className="w-full flex justify-center pt-5">
-          <Link to={`/post-info/${post.data.id}/comments`}>
+          <Link href={`/post-info/${post.data.id}/comments`}>
             <button className=" text-white font-bold text-sm px-2 py-1 rounded-md">
               Show Comments
             </button>
           </Link>
         </div>
       )}
-      <div className="w-full">
+      {/* <div className="w-full">
         <Outlet />
-      </div>
+      </div> */}
     </div>
   );
 };

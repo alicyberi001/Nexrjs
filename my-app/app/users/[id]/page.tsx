@@ -1,26 +1,19 @@
+"use client";
+
 import { AxiosError } from "axios";
 import { useQuery } from "@tanstack/react-query";
-import {
-  Link,
-  Outlet,
-  Navigate,
-  useParams,
-  useLocation,
-} from "react-router-dom";
-
 import { PostCard } from "@/components/postCard";
 import { fetchPostByUser } from "@/api/posts";
 import { fetchSingleUserById } from "@/api/users.api";
 import { UserCard } from "@/components/userCard";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 
 export const UserById: React.FC = () => {
-  const { id } = useParams();
+  const router = useRouter()
+  const { id } = router.query
   const validId = !isNaN(Number(id));
-  const location = useLocation();
-  // const loaderData = useLoaderData();
-  // console.log(loaderData);
-
   const user = useQuery({
     queryKey: ["fetching-user-by-id"],
     queryFn: () => fetchSingleUserById(Number(id)),
@@ -32,7 +25,7 @@ export const UserById: React.FC = () => {
   });
 
   if (!validId || (user.error as AxiosError)?.status === 404) {
-    return <Navigate to="/404" />;
+    return <Link href="/404" />;
   }
 
   if (!user.isSuccess) {
@@ -54,9 +47,7 @@ export const UserById: React.FC = () => {
         <PostCard key={index} user={user.data} post={el}/>
         </div>
       ))}
-      {/* <PostCard user={user.data} } /> */}
-
-      {!location.pathname.includes("comments") && (
+      {!router.pathname.includes("comments") && (
         <div className="w-full flex justify-center pt-5">
           {/* <Link to={`/post-info/${post.data.id}/comments`}>
             <button className=" text-white font-bold text-sm px-2 py-1 rounded-md">

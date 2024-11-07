@@ -1,10 +1,12 @@
+"use client";
+
 import React from "react";
-import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUsersList } from "@/api/users.api";
 import { listsLimit } from "@/utils/config";
 import { UsersCard } from "@/components/usersCard";
 import { IUser } from "@/types/users";
+import { useRouter } from "next/router";
 
 
 // interface IData {
@@ -15,17 +17,17 @@ export const Users: React.FC = () => {
   const [data, setData] = React.useState<IUser[]>([]);
   const [page, setPage] = React.useState<number>(1);
 
-  const [searchParams] = useSearchParams();
+  const router = useRouter()
 
   const users = useQuery({
-    queryKey: ["fetching-users", page, searchParams],
+    queryKey: ["fetching-users", page, router.query],
     queryFn: () => fetchUsersList({ skip: page * listsLimit - listsLimit }),
   });
 
   React.useEffect(() => {
     setPage(1);
     // setData([]);
-  }, [searchParams]);
+  }, [router.query]);
 
   React.useEffect(() => {
     if (!users.isSuccess) return;

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { PostCard } from "../../components/postCard";
@@ -5,8 +7,10 @@ import { fetchPostsList } from "../../api/posts";
 import { fetchUsersListByIds, fetchSingleUserById } from "../../api/users.api";
 import { IUser } from "../../types/users";
 import { IPost } from "../../types/posts.type";
-import { Link, useSearchParams } from "react-router-dom";
+// import { Link, useSearchParams } from "react-router-dom";
 import { listsLimit } from "../../utils/config";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface IData {
   user: IUser;
@@ -18,14 +22,15 @@ export const Posts: React.FC = () => {
   const [data, setData] = React.useState<IData[]>([]);
   const [dataLoading, setDataLoading] = React.useState<boolean>(false);
 
-  const [searchParams] = useSearchParams();
+  const router = useRouter();
+  const { tag } = router.query;
 
   const posts = useQuery({
-    queryKey: ["fetching-posts", page, searchParams.get("tag")],
+    queryKey: ["fetching-posts", page, tag],
     queryFn: () =>
       fetchPostsList({
         skip: page * listsLimit - listsLimit,
-        tag: searchParams.get("tag"),
+        tag: tag,
       }),
     refetchOnWindowFocus: false,
   });
@@ -46,7 +51,7 @@ export const Posts: React.FC = () => {
   React.useEffect(() => {
     setPage(1);
     setData([]);
-  }, [searchParams]);
+  }, [router.query, tag]);
 
   React.useEffect(() => {
     if (!posts.error || !posts.isError) return;
@@ -79,7 +84,7 @@ export const Posts: React.FC = () => {
       </div>
       <div className="flex flex-col gap-5 gap-x-4 mx-auto">
         {data.map((el, index) => (
-          <Link key={index} to={`/post-info/${el.post.id}`}>
+          <Link key={index} href={`/post-info/${el.post.id}`}>
             <PostCard user={el.user} post={el.post} />
           </Link>
         ))}
