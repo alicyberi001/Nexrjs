@@ -1,8 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import { IUser } from "../types/users";
-import { Link } from "react-router-dom";
-
 export const UsersCard: React.FC<IUser> = ({
   firstName,
   lastName,
@@ -16,7 +15,7 @@ export const UsersCard: React.FC<IUser> = ({
     <div className="w-[900px] min-w-[670px] mx-auto border-y border-y-gray-500 py-8 flex gap-32 pr-20">
       <img src={image} alt="avatar" />
       <div>
-        <Link to={`/users/${id}`}>
+        <Link href={`/users/${id}`}>
           <h2 className="text-white font-semibold text-2xl">
             {firstName} {lastName}
           </h2>

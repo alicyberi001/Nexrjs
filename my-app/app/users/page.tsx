@@ -8,16 +8,17 @@ import { UsersCard } from "@/components/usersCard";
 import { IUser } from "@/types/users";
 import { useRouter } from "next/router";
 
-
 // interface IData {
 //   user?: IUser;
 // }
 
-export const Users: React.FC = () => {
+const Users: React.FC = () => {
   const [data, setData] = React.useState<IUser[]>([]);
   const [page, setPage] = React.useState<number>(1);
 
-  const router = useRouter()
+  const router = useRouter();
+
+  
 
   const users = useQuery({
     queryKey: ["fetching-users", page, router.query],
@@ -40,7 +41,6 @@ export const Users: React.FC = () => {
     // setDataLoading(false);
     setData((prevState) => [...prevState, ...newData]);
   }, [users.isSuccess, users.data]);
-
 
   return (
     <>
@@ -67,3 +67,10 @@ export const Users: React.FC = () => {
     </>
   );
 };
+
+export default Users;
+
+// const Test = () => {
+//   return <p>test</p>;
+// };
+// export default Test;

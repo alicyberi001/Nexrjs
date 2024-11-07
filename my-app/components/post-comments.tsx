@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-
 import { fetchPostComments } from "../api/comments.api";
 import { FaRegUserCircle } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 export const PostComments: React.FC = () => {
-  const { id } = useParams();
+  const router = useRouter()
+  const { id } = router.query
 
   const comments = useQuery({
     queryKey: ["post-comments", id],

@@ -1,10 +1,10 @@
 "use client";
 
-import { Navigate, useNavigate } from "react-router-dom";
 import { AiOutlineLike, AiOutlineDislike, AiOutlineEye } from "react-icons/ai";
 import { IPost } from "../types/posts.type";
 import { IUser } from "../types/users";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+
 
 interface IPostCardProps {
   user: IUser;
@@ -47,7 +47,7 @@ export const PostCard: React.FC<IPostCardProps> = ({
           {post.tags.map((tag, index) => {
             //   const colorHash = stringToColor(tag);
             return (
-              <Link key={index} to={`/posts?tag=${tag}`}>
+              <Link key={index} href={`/posts?tag=${tag}`}>
                 <div
                   key={index}
                   //   style={{

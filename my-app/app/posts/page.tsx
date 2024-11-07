@@ -17,7 +17,7 @@ interface IData {
   post: IPost;
 }
 
-export const Posts: React.FC = () => {
+const Posts: React.FC = () => {
   const [page, setPage] = React.useState<number>(1);
   const [data, setData] = React.useState<IData[]>([]);
   const [dataLoading, setDataLoading] = React.useState<boolean>(false);
@@ -101,3 +101,5 @@ export const Posts: React.FC = () => {
     </div>
   );
 };
+
+export default Posts;

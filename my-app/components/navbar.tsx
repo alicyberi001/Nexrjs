@@ -1,12 +1,10 @@
 "use client";
 
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
 
 export const NavBar: React.FC = () => {
-  const navigate = useNavigate();
-
   const onClickHome = () => {
-    navigate("/");
+    return <Link href="/" />;
   };
 
   return (
@@ -64,41 +62,31 @@ export const NavBar: React.FC = () => {
 
             <nav className="hidden ml-10 mr-auto space-x-10 lg:ml-20 lg:space-x-12 md:flex md:items-center md:justify-start">
               <a
-              onClick={onClickHome}
+                onClick={onClickHome}
                 title=""
                 className="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white hover:cursor-pointer"
               >
                 {" "}
                 Home{" "}
               </a>
-              
-              <Link to="/users">
-              <a
-                title=""
-                className="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"
-              >
-                {" "}
-                Users{" "}
-              </a>
+              <Link href="/users">
+                <span
+                  title=""
+                  className="text-base font-normal text-gray-400
+                transition-all duration-200 hover:text-white"
+                >
+                  Users{" "}
+                </span>
               </Link>
-
-              <Link to="/posts">
-              <a
-                title=""
-                className="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"
-              >
-                {" "}
-                Posts{" "}
-              </a>
-              </Link>
-
-              <a
-                title=""
-                className="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"
-              >
-                {" "}
-                Support{" "}
-              </a>
+              <Link href="/posts">
+                <span
+                  title=""
+                  className="text-base font-normal text-gray-400
+                transition-all duration-200 hover:text-white"
+                >
+                  Posts{" "}
+                </span>
+              </Link>{" "}
             </nav>
 
             <div className="relative hidden md:items-center md:justify-center md:inline-flex group">
